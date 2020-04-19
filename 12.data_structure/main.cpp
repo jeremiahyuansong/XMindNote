@@ -12,8 +12,9 @@
 #include "binary_search.h"
 #include "bubble_sort.h"
 #include "select_sort.h"
+#include "insert_sort.h"
 
-enum SortType { kBubbleSort = 0, kSelectSort = 1 };
+enum SortType { kBubbleSort = 0, kSelectSort = 1, kInsertSort = 2 };
 
 enum SearchType { kBinarySearchLinear = 0, kBinarySearchRecursive = 1 };
 
@@ -25,6 +26,9 @@ Sort *CreateSortMethod(SortType sort_type) {
     break;
   case kSelectSort:
     sort = new SelectSort();
+    break;
+  case kInsertSort:
+    sort = new InsertSort();
     break;
   default:
     sort = new BubbleSort();
@@ -60,15 +64,23 @@ int main(int argc, char *argv[]) {
   std::cout << "before sort:" << std::endl;
   log_data(data);
 
-  // bubble sort
 #if 0
+  // bubble sort
   std::unique_ptr<Sort> bubble_sort(CreateSortMethod(kBubbleSort));
   bubble_sort->DoSort(data);
 #endif
 
+#if 0
   // select sort
   std::unique_ptr<Sort> select_sort(CreateSortMethod(kSelectSort));
   select_sort->DoSort(data);
+#endif
+
+  // insert sort
+  std::unique_ptr<Sort> insert_sort(CreateSortMethod(kInsertSort));
+  insert_sort->DoSort(data);
+
+
   std::cout << "after sort:" << std::endl;
   log_data(data);
 
