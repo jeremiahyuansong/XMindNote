@@ -13,6 +13,7 @@
 #include "bubble_sort.h"
 #include "select_sort.h"
 #include "insert_sort.h"
+#include "leet_code.h"
 
 enum SortType { kBubbleSort = 0, kSelectSort = 1, kInsertSort = 2 };
 
@@ -91,5 +92,12 @@ int main(int argc, char *argv[]) {
   int32_t exist = binary_seach->DoSearch(data, 8);
   std::cout << "not_exist=" << not_exist << ", exist index=" << exist
             << std::endl;
+
+  Solution solution;
+  std::string input;
+  int target_n;
+  std::cin >> input;
+  std::cin >> target_n;
+  solution.DoStringCombination(input, target_n);
   return 0;
 }
