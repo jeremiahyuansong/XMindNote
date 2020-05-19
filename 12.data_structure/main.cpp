@@ -93,11 +93,28 @@ int main(int argc, char *argv[]) {
   std::cout << "not_exist=" << not_exist << ", exist index=" << exist
             << std::endl;
 
-  Solution solution;
-  std::string input;
-  int target_n;
-  std::cin >> input;
-  std::cin >> target_n;
-  solution.DoStringCombination(input, target_n);
+  //字母组合问题
+//  Solution solution;
+//  std::string input;
+//  int target_n;
+//  std::cin >> input;
+//  std::cin >> target_n;
+//  solution.DoStringCombination(input, target_n);
+
+  // 链表问题测试
+  SolutionList solution_list;
+  SolutionList::ListNode one(1);
+  SolutionList::ListNode two(2);
+  SolutionList::ListNode three(3);
+  SolutionList::ListNode four(4);
+  SolutionList::ListNode five(5);
+  one.next = &two;
+  two.next = &three;
+  three.next = &four;
+  four.next = &five;
+  SolutionList::OutListNode(&one);
+  std::cout << "after delete" << std::endl;
+  SolutionList::ListNode* result = solution_list.removeNthFromEnd(&one, 2);
+  SolutionList::OutListNode(result);
   return 0;
 }

@@ -55,8 +55,10 @@ private:
    */
   /// 使用递归实现
   void StringCombinationImp(const std::string &src, const int target_n,
-                            size_t current_n, size_t start_index, std::string res) {
-    // 保存下当前的正在处理的字串 后面用于还原 eg: ab组合后, 重新回到a,继续后面ac
+                            size_t current_n, size_t start_index,
+                            std::string res) {
+    // 保存下当前的正在处理的字串 后面用于还原 eg: ab组合后,
+    // 重新回到a,继续后面ac
     std::string s = res;
     for (size_t i = start_index; i < src.length() - (target_n - current_n);
          ++i) {
@@ -71,5 +73,47 @@ private:
       }
       res = s;
     }
+  }
+};
+
+class SolutionList {
+public:
+  struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+  };
+
+  static void OutListNode(ListNode *node) {
+    if (!node) {
+      return;
+    }
+    std::cout << node->val << std::endl;
+    if (node->next) {
+      OutListNode(node->next);
+    }
+  }
+  ListNode *removeNthFromEnd(ListNode *head, int n) {
+    // 一遍 遍历知道元素的个数
+    size_t num = 0;
+    // 删除的可能是头元素 需要一个桩
+    ListNode *new_head = new ListNode(-1);
+    new_head->next = head;
+    ListNode *iter = new_head;
+    while (iter) {
+      ++num;
+      iter = iter->next;
+    }
+    iter = new_head;
+    size_t target = num - n;
+    size_t num_iter = 0;
+    while (num_iter + 1 != target) {
+      num_iter++;
+      iter = iter->next;
+    }
+    iter->next = iter->next->next;
+    ListNode *result = new_head->next;
+    delete new_head;
+    return result;
   }
 };
