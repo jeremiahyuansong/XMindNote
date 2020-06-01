@@ -20,8 +20,7 @@ class Solution {
     size_t slow = 0;
     for (size_t quick = 1; quick < nums.size(); ++quick) {
       if (nums[slow] != nums[quick]) {
-        slow++;
-        nums[slow] = nums[quick];
+        nums[++slow] = nums[quick];
       }
     }
     return slow + 1;
