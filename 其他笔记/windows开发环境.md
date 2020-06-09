@@ -53,7 +53,7 @@
     - Key PromoterX ：快捷键提示和统计
   - 配置
     - tool chain配置编译器,如下图
-    - ![avatar](./source/window_develop/clion_toolchain.png)
+    ![avatar](./source/window_develop/clion_toolchain.png)
     - 开启clang-format：Editor->Code Style->Enable Clangformat
 
 ### 编译器安装
@@ -114,8 +114,8 @@
   - 安装个性化字体：[地址](https://github.com/adam7/delugia-code/releases/download/v1910.04.1/Delugia.Nerd.Font.Complete.ttf)
   - windows terminal设置：完成上述步骤后，可以进行windows terminal的设置（ctrl+,快捷键打开）
   ![](./source/window_develop/wt_setting.png)
-  这里有一根我自己的配置文件可以进行参考：[配置文件](file:///./source/../../source/window_develop/settings.json)
-  - 添加右键终端：windosw下运行下面的bat脚本。其中wt的路径为windows terminal的路径，Icon是自己指定的一个图标，没有的话可以用仓库里面[终端图标](file:///./../source/window_develop/terminal.ico)
+  这里有一根我自己的配置文件可以进行参考：[配置文件](./source/window_develop/settings.json)
+  - 添加右键终端：windosw下运行下面的bat脚本。其中wt的路径为windows terminal的路径，Icon是自己指定的一个图标，没有的话可以用仓库里面[终端图标](./source/window_develop/terminal.ico)
   ```
   Windows Registry Editor Version 5.00
 
