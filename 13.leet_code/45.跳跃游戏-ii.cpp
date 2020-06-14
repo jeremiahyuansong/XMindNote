@@ -12,7 +12,33 @@ using namespace std;
 
 class Solution {
  public:
+  // 边界方法:次数的更新是通过到达边界的时候在条件里进行更新
+  // 2 3 1 1 4
+  // i  maxpos  end  step
+  // 0    2      2    1
+  // 1    4      2    1
+  // 2    4      4    2
+  // 3    4      4    2
+  // 4    4      4    2
   int jump(vector<int> &nums) {
+    size_t maxpos = 0, end = 0, step = 0;
+    // 结束的条件是到达前一个元素
+    for (size_t i = 0; i < nums.size() - 1; ++i) {
+      if (maxpos >= i) {
+        // 当前位置在能达到的范围内
+        maxpos = std::max(maxpos, i + nums[i]);
+        if (end == i) {
+          // 到达约定的边界 更新step的次数
+          end = maxpos;
+          ++step;
+        }
+      }
+    }
+    return step;
+  }
+
+ private:
+  int jump_private(vector<int> &nums) {
     // 贪心算法：在每轮可以做出的决策中 选择最优的决策
     if (nums.size() == 1) {
       return 0;
@@ -37,6 +63,5 @@ class Solution {
 
     return jump_count + 1;
   }
-  // 边界方法
 };
 // @lc code=end
