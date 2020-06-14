@@ -19,6 +19,7 @@
     - vim：没有vim插件，代码不再有爱
     - LeetCode：vscode中刷题插件，emmm，别问我为什么要这个插件
     - markdown all in one：makr down插件，现在我就是在mark down里面里面写这玩意
+    - koroFileHeader: 快速生成头文件注释和函数注释的插件
   - 配置
     - clang-format配置：在设置中搜索“clang-format”关键字，在user选项卡下配置下面几个：
       - Executable：clang-format的路径，取决于你安装clang的路径
@@ -55,6 +56,17 @@
     - tool chain配置编译器,如下图
     ![avatar](./source/window_develop/clion_toolchain.png)
     - 开启clang-format：Editor->Code Style->Enable Clangformat
+    - 配置头文件注释模板，在File-->settings-->Editor-->File and templates下：
+      ```C++
+        #if ($HEADER_COMMENTS)
+        /**
+         * @file ${FILE_NAME}
+         * @author yuansong
+         * @date ${DATE}
+         * @brief xxx
+         */
+        #end
+      ```
 
 ### 编译器安装
 - mingw
