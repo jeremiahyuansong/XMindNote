@@ -104,3 +104,24 @@
         ```
     - 151 翻转字符串里的单词
       - 思路： 根据空格提取出所有的单词放到vector中，然后对vector进行输出
+    - 345 反转字符串中的元音字母
+      - 思路： 首尾分别用指针进行元音字母的查找，找到就进行替换，直到首尾指针相遇
+    - 290 单词规律
+      - 思路：首先是一种通用的字符串分割的实现方式，分割完之后利用两个unordered_map进行对比
+    ```c++
+      void split(const string &source, const string &split, vector<string> &result) {
+        string::size_type start, end;
+        start = 0;
+        end = source.find(split);
+        while (end != string::npos) {
+          result.push_back(source.substr(start, end - start));
+          // 更新起始和终止的位置
+          start = end + split.size();
+          end = source.find(split, start);  // 这里的find从新的start位置开始查找
+        }
+        // 处理剩余的串
+        if (start < source.size()) result.push_back(source.substr(start));
+      }
+    ```
+    - 205 同构字符串
+      - 思路：利用hash table比对出现的同一字符的位置
