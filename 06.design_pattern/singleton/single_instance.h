@@ -13,11 +13,12 @@
  * 懒汉模式 线程安全
  */
 class SingleInstanceLazyImp {
-private:
+ private:
   static std::mutex mtx_;
   static SingleInstanceLazyImp* instance_;
   SingleInstanceLazyImp() {}
-public:
+
+ public:
   static SingleInstanceLazyImp* GetInstance();
 };
 
@@ -35,4 +36,4 @@ SingleInstanceLazyImp* SingleInstanceLazyImp::GetInstance() {
   return instance_;
 }
 
-#endif // DATA_STRUCT_06_DESIGN_PATTERN_SINGLE_INSTANCE_H_
+#endif  // DATA_STRUCT_06_DESIGN_PATTERN_SINGLE_INSTANCE_H_

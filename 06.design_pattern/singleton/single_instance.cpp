@@ -13,20 +13,20 @@
 
 const size_t num = 20;
 
-std::vector<long> results;
+std::vector<void*> results;
 
 void DoSingleCreate(size_t index) {
   SingleInstanceLazyImp* instance = SingleInstanceLazyImp::GetInstance();
-  results[index] = (long)instance;
+  results[index] = static_cast<void*>(instance);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   std::vector<std::thread> single_threads;
   single_threads.reserve(num);
   results.resize(num);
   for (size_t i = 0; i < num; ++i) {
     single_threads.emplace_back();
-    auto& thread_item = single_threads[single_threads.size()-1];
+    auto& thread_item = single_threads[single_threads.size() - 1];
     thread_item = std::thread(DoSingleCreate, i);
   }
   for (size_t i = 0; i < num; ++i) {

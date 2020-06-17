@@ -25,7 +25,7 @@ class ScrollBarItem {
 class WidgetItem {
  public:
   virtual ~WidgetItem() {}
-  virtual void WidgetInstallScrollBar(ScrollBarItem *scroll_bar) = 0;
+  virtual void WidgetInstallScrollBar(ScrollBarItem* scroll_bar) = 0;
   virtual void WhoAmI() const = 0;
 
  protected:
@@ -58,7 +58,7 @@ class MacWidgetItem : public WidgetItem {
     cout << "i am MacWidgetItem " + scrollbar_install_result + " scrollbar" << endl;
   }
 
-  void WidgetInstallScrollBar(ScrollBarItem *scoroll_bar) override {
+  void WidgetInstallScrollBar(ScrollBarItem* scoroll_bar) override {
     // do sth
     if (scoroll_bar) scrollbar_installed_ = true;
   }
@@ -87,7 +87,7 @@ class LinuxWidgetItem : public WidgetItem {
     string scrollbar_install_result = scrollbar_installed_ ? "with" : "without";
     cout << "i am LinuxWidgetItem " + scrollbar_install_result + " scrollbar" << endl;
   }
-  void WidgetInstallScrollBar(ScrollBarItem *scroll_bar) override {
+  void WidgetInstallScrollBar(ScrollBarItem* scroll_bar) override {
     // do sth
     if (scroll_bar) scrollbar_installed_ = true;
   }
@@ -99,8 +99,8 @@ class LinuxWidgetItem : public WidgetItem {
 class FileManagerFactory {
  public:
   virtual ~FileManagerFactory() {}
-  virtual WidgetItem *CreateWidget() = 0;
-  virtual ScrollBarItem *CreateScrollBar() = 0;
+  virtual WidgetItem* CreateWidget() = 0;
+  virtual ScrollBarItem* CreateScrollBar() = 0;
 };
 
 /**
@@ -111,9 +111,9 @@ class MacFileManagerFactory : public FileManagerFactory {
   ~MacFileManagerFactory() {}
 
  private:
-  WidgetItem *CreateWidget() override { return new MacWidgetItem(); }
+  WidgetItem* CreateWidget() override { return new MacWidgetItem(); }
 
-  ScrollBarItem *CreateScrollBar() override { return new MacScrollBarItem(); }
+  ScrollBarItem* CreateScrollBar() override { return new MacScrollBarItem(); }
 };
 
 /**
@@ -124,15 +124,15 @@ class LinuxFileManagerFactory : public FileManagerFactory {
   ~LinuxFileManagerFactory() {}
 
  private:
-  WidgetItem *CreateWidget() override { return new LinuxWidgetItem(); }
-  ScrollBarItem *CreateScrollBar() override { return new LinuxScrollBarItem(); }
+  WidgetItem* CreateWidget() override { return new LinuxWidgetItem(); }
+  ScrollBarItem* CreateScrollBar() override { return new LinuxScrollBarItem(); }
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   auto test_file_manager = [](FileManagerFactory* file_manager_factory) {
     // 利用抽象工厂创建组件(产品)
-    WidgetItem *widget = file_manager_factory->CreateWidget();
-    ScrollBarItem *scrollbar = file_manager_factory->CreateScrollBar();
+    WidgetItem* widget = file_manager_factory->CreateWidget();
+    ScrollBarItem* scrollbar = file_manager_factory->CreateScrollBar();
 
     // 体现产品的关联特性——family
     widget->WidgetInstallScrollBar(scrollbar);
@@ -146,12 +146,12 @@ int main(int argc, char *argv[]) {
     delete widget;
   };
   // Mac风格的文件管理器
-  FileManagerFactory *mac_file_manager_factory = new MacFileManagerFactory();
+  FileManagerFactory* mac_file_manager_factory = new MacFileManagerFactory();
   test_file_manager(mac_file_manager_factory);
   delete mac_file_manager_factory;
 
   // Linux风格文件管理器
-  FileManagerFactory *linux_file_manager_factory = new LinuxFileManagerFactory();
+  FileManagerFactory* linux_file_manager_factory = new LinuxFileManagerFactory();
   test_file_manager(linux_file_manager_factory);
   delete linux_file_manager_factory;
 
