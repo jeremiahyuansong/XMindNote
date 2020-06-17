@@ -15,8 +15,8 @@
     按照上述UML关系图进行映射
     ![avatar](./../source/FileManagerFactory.jpg)
 
-        这里我自己在关系图上多增加了一条WidgetItem到ScrollBar的关联关系，实际场景的含义是：得到滚动条需要被安装在窗口中，否则用个鬼！ 这也意在说明抽象工厂使用的场景：一系列相关或相互依赖的对象。由于MacFileManagerFactory和LinuxFileManagerFactory的存在，使得这种关联关系存在一种约束，也就是你不太可能在一个mac风格的widget中安装一个Linux风格的ScrollBar。当然，这里说的不太可能主要是指，在你正常开发的过程不太可能。。。如果你是一个非正常的程序员，你硬要用两种风格的factory分别创建Widget和ScrollBar，那么。。。你的想象力可是有点强！！！
-
+    - 这里我自己在关系图上多增加了一条WidgetItem到ScrollBar的关联关系，实际场景的含义是：得到滚动条需要被安装在窗口中，否则用个鬼！ 这也意在说明抽象工厂使用的场景：一系列相关或相互依赖的对象。由于MacFileManagerFactory和LinuxFileManagerFactory的存在，使得这种关联关系存在一种约束，也就是你不太可能在一个mac风格的widget中安装一个Linux风格的ScrollBar。当然，这里说的不太可能主要是指，在你正常开发的过程不太可能。。。如果你是一个非正常的程序员，你硬要用两种风格的factory分别创建Widget和ScrollBar，那么。。。你的想象力可是有点强！！！
+  - 类映射表
     | uml class        | mugong class            |
     | ---------------- | ----------------------- |
     | AbstractFactory  | FileManagerFactory      |
