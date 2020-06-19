@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 using namespace std;
@@ -25,7 +26,7 @@ class ScrollBarItem {
 class WidgetItem {
  public:
   virtual ~WidgetItem() {}
-  virtual void WidgetInstallScrollBar(ScrollBarItem* scroll_bar) = 0;
+  virtual void WidgetInstallScrollBar(shared_ptr<ScrollBarItem> scroll_bar) = 0;
   virtual void WhoAmI() const = 0;
 
  protected:
@@ -58,7 +59,7 @@ class MacWidgetItem : public WidgetItem {
     cout << "i am MacWidgetItem " + scrollbar_install_result + " scrollbar" << endl;
   }
 
-  void WidgetInstallScrollBar(ScrollBarItem* scoroll_bar) override {
+  void WidgetInstallScrollBar(shared_ptr<ScrollBarItem> scoroll_bar) override {
     // do sth
     if (scoroll_bar) scrollbar_installed_ = true;
   }
@@ -87,7 +88,7 @@ class LinuxWidgetItem : public WidgetItem {
     string scrollbar_install_result = scrollbar_installed_ ? "with" : "without";
     cout << "i am LinuxWidgetItem " + scrollbar_install_result + " scrollbar" << endl;
   }
-  void WidgetInstallScrollBar(ScrollBarItem* scroll_bar) override {
+  void WidgetInstallScrollBar(shared_ptr<ScrollBarItem> scroll_bar) override {
     // do sth
     if (scroll_bar) scrollbar_installed_ = true;
   }
@@ -99,8 +100,8 @@ class LinuxWidgetItem : public WidgetItem {
 class FileManagerFactory {
  public:
   virtual ~FileManagerFactory() {}
-  virtual WidgetItem* CreateWidget() = 0;
-  virtual ScrollBarItem* CreateScrollBar() = 0;
+  virtual unique_ptr<WidgetItem> CreateWidget() = 0;
+  virtual unique_ptr<ScrollBarItem> CreateScrollBar() = 0;
 };
 
 /**
@@ -111,9 +112,13 @@ class MacFileManagerFactory : public FileManagerFactory {
   ~MacFileManagerFactory() {}
 
  private:
-  WidgetItem* CreateWidget() override { return new MacWidgetItem(); }
+  unique_ptr<WidgetItem> CreateWidget() override {
+    return unique_ptr<WidgetItem>(new MacWidgetItem());
+  }
 
-  ScrollBarItem* CreateScrollBar() override { return new MacScrollBarItem(); }
+  unique_ptr<ScrollBarItem> CreateScrollBar() override {
+    return unique_ptr<ScrollBarItem>(new MacScrollBarItem());
+  }
 };
 
 /**
@@ -124,36 +129,36 @@ class LinuxFileManagerFactory : public FileManagerFactory {
   ~LinuxFileManagerFactory() {}
 
  private:
-  WidgetItem* CreateWidget() override { return new LinuxWidgetItem(); }
-  ScrollBarItem* CreateScrollBar() override { return new LinuxScrollBarItem(); }
+  unique_ptr<WidgetItem> CreateWidget() override {
+    return unique_ptr<WidgetItem>(new LinuxWidgetItem());
+  }
+  unique_ptr<ScrollBarItem> CreateScrollBar() override {
+    return unique_ptr<ScrollBarItem>(new LinuxScrollBarItem());
+  }
 };
 
 int main(int argc, char* argv[]) {
-  auto test_file_manager = [](FileManagerFactory* file_manager_factory) {
-    // 利用抽象工厂创建组件(产品)
-    WidgetItem* widget = file_manager_factory->CreateWidget();
-    ScrollBarItem* scrollbar = file_manager_factory->CreateScrollBar();
+  auto test_file_manager = [](shared_ptr<FileManagerFactory> file_manager_factory) {
+    // 利用抽象工厂创建组件(产品) 将unique_ptr转shared_ptr 因为后面需要通过函数传递
+    shared_ptr<WidgetItem> widget = file_manager_factory->CreateWidget();
+    shared_ptr<ScrollBarItem> scrollbar = file_manager_factory->CreateScrollBar();
 
-    // 体现产品的关联特性——family
+    // 体现产品的关联特性——family 安装滚动条
+#if 1
     widget->WidgetInstallScrollBar(scrollbar);
+#endif
 
     // 产品干活--哈哈哈 听着像是研发不干活一样
     scrollbar->WhoAmI();
     widget->WhoAmI();
-
-    // 回收产品--emm 当我没说
-    delete scrollbar;
-    delete widget;
   };
   // Mac风格的文件管理器
-  FileManagerFactory* mac_file_manager_factory = new MacFileManagerFactory();
+  shared_ptr<FileManagerFactory> mac_file_manager_factory(make_shared<MacFileManagerFactory>());
   test_file_manager(mac_file_manager_factory);
-  delete mac_file_manager_factory;
 
   // Linux风格文件管理器
-  FileManagerFactory* linux_file_manager_factory = new LinuxFileManagerFactory();
+  shared_ptr<FileManagerFactory> linux_file_manager_factory(make_shared<LinuxFileManagerFactory>());
   test_file_manager(linux_file_manager_factory);
-  delete linux_file_manager_factory;
 
   return 0;
 }
