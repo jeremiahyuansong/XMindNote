@@ -67,6 +67,15 @@
          */
         #end
       ```
+- Goland
+  - 安装：点击[下载](https://www.jetbrains.com/go/download/other.html),版本仍然是2020.1.1
+  - 破解：使用和clion一样的破解软件和破解方法
+  - 配置
+    - GOROOT-系统环境变量中增加go(注意是go语言包)的安装路径
+    - PATH-PATH环境变量增加%GOROOT%/bin路径
+    - GOPATH-GOPATH会作为一些插件和包的默认下载路径，且可以为每个项目监理自己的GOPATH路径，我理解应该类似于C++的include路径，这里可以自己指定一个路径作为全局的GOPATH路径
+    - run配置：goland点击运行代码之后，通过生成临时二进制文件并运行。所以当前目录下不会产生目标文件。若要生成目标文件，则在Edit Configuration中进行配置，如下图：
+    ![avatar](./source/window_develop/goland_setting.png)
 
 ### 编译器安装
 - mingw
