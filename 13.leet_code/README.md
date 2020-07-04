@@ -136,3 +136,30 @@
         - 通过递归方式解决问题
     - [179 最大数](./179.最大数.cpp)
       - 思路：最直接的思路是对number进行字典序的逆序输出，但是无法解决[3,30]被输出为303的问题，看了答案之后了解到需要定义新的sort规则：若a_b > b_a,则有a>b，其中“_”表示字符串连接
+    - [38 外观数列](./38.外观数列.cpp)
+      - 思路：按照轮次遍历上一次字符串结果，统计其中相同数字的个数并更新到当前这轮的字符串结果。注意：在for中嵌套while的套路通常可以用来快速统计。
+      ```C++
+      // for 这里不做index的递增更新，而是由内部while循环来做
+      for (auto index = 0; index < last_str.size();) {
+        auto last_ch = last_str[index];
+        auto count = 0;
+        // while主要用作相等条件的判定 同时前面需要携带index的结束条件
+        while (index < last_str.size() && last_str[index] == last_ch) {
+          ++index;
+          ++count;
+        }
+        cur_str += (to_string(count) + last_ch);
+      }   
+      ```
+
+      ```c++
+      // 另外一种形式
+      for (auto index = 0; index < last_str.size(); ++index) {
+        auto count = 0;
+        while(index + 1 < last_str.size() && last_str[index] == last_str[index+1]) {
+          count++;
+          index++;
+        }
+        cur_str += (to_string(count) + last_str[index]);
+      }
+      ```
