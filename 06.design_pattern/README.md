@@ -7,4 +7,5 @@
 
 ### 创建型模式
 - Abstract Factory(抽象工厂)，families of product objects
+- Builder(生成器)，same construction process can create different representations.
 
