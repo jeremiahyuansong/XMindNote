@@ -53,7 +53,7 @@ public:
       cache_size_--;
     }
     // 插入到链表头部
-    cache_data_list_.push_back(cache_data);
+    cache_data_list_.push_front(cache_data);
     cache_data_map_[key] = cache_data;
     cache_size_++;
     return true;
