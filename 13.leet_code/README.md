@@ -164,4 +164,22 @@
       }
       ```
     - [316 删除重复字符使返回字符串字典序最小](./316.去除重复字母.cpp)
-      - 思路: todo
+      - 思路: 遍历字符串，遇到不同字符时，判定与栈顶元素的大小关系，若遍历字符比栈顶元素小，且后续的字符串中还存在重复的栈顶元素，那么将栈顶的元素pop出去。这个操作结束的条件为：栈空 || 栈顶元素已经不存在重复 || 栈顶元素比遍历元素小，因此，采用的是while循环,关键的状态代码如下：
+     
+        ```C++
+        for (size_t i = 0; i < s.size(); ++i) {
+        count[s[i] - 'a']--;
+        if (res_set.count(s[i]) != 0) continue;
+        // 单调栈状态更新：非空、栈顶元素大于当前遍历s[i]、后续还有该字母
+        while (!res_stack.empty() && res_stack.top() > s[i] && count[res_stack.top() - 'a'] > 0) {
+          res_set.erase(res_stack.top());
+          res_stack.pop();
+        }
+        res_stack.push(s[i]);
+        res_set.emplace(s[i]);
+        }
+        ``` 
+      
+      - 优化：
+        - 上面方法采用了一个hash表判断重复，但由于这里只有26个小写字符，可以替换为一个bool的visit数组；
+        - 采用stack的方式，后续从stack中取结果的时候，因为只能使用top的方法取，取出来之后还需要reverse翻转，可以优化为直接使用**string代替stack**，back操作代替top操作。效果相同，且最后避免翻转。

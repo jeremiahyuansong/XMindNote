@@ -15,8 +15,8 @@
 using namespace std;
 
 class Solution {
- public:
-  string removeDuplicateLetters(string s) {
+ private:
+  string removeDuplicateLettersV1(string s) {
     if (s.empty()) return "";
     vector<size_t> count(26, 0);
     stack<char> res_stack{};
@@ -44,10 +44,29 @@ class Solution {
     return result;
   }
 
- private:
+ public:
   /**
    * 优化版本：string代替调用栈、bool数组代替hash表
    * */
-  string removeDuplicateLettersOptimze(string s) {}
+  string removeDuplicateLetters(string s) {
+    if (s.empty()) return "";
+    string result = "";
+    vector<bool> visit(26, false);  // 判定res结果中是否已经存在当前字符
+    vector<size_t> count(26, 0);    // 判定后续是否还有该字符
+    for (auto ch : s) {
+      count[ch - 'a']++;
+    }
+    for (size_t i = 0; i < s.size(); ++i) {
+      count[s[i] - 'a']--;
+      if (visit[s[i] - 'a']) continue;
+      while (!result.empty() && result.back() > s[i] && count[result.back() - 'a'] > 0) {
+        visit[result.back() - 'a'] = false;
+        result.erase(result.size() - 1, 1);
+      }
+      result += s[i];
+      visit[s[i] - 'a'] = true;
+    }
+    return result;
+  }
 };
 // @lc code=end
