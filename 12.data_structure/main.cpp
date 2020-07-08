@@ -15,6 +15,7 @@
 #include "leet_code.h"
 #include "list_cycle.h"
 #include "select_sort.h"
+#include "pimpl_widget.h"
 
 enum SortType { kBubbleSort = 0, kSelectSort = 1, kInsertSort = 2 };
 
@@ -97,7 +98,7 @@ int main(int argc, char* argv[]) {
             << std::endl;
 #endif
 
-#if 1
+#if 0
   // 链表问题测试
   SolutionList solution_list;
   SolutionList::ListNode one(1);
@@ -129,7 +130,9 @@ int main(int argc, char* argv[]) {
   SolutionList::ListNode* result = solution_list.removeNthFromEnd(&one, 2);
   SolutionList::OutListNode(result);
 #endif
-
 #endif
+
+  PImplWidget p_impl_widget;
+  std::cout << p_impl_widget.WhoIAm() << std::endl;
   return 0;
 }
