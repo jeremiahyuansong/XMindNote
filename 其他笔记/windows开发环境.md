@@ -177,6 +177,28 @@ LxRunOffline install -n centos -d c:\d\programfile\wslsystem\centos -f .\centos-
 
 **tips**---如果需要先升级wsl2内核，则参考[wsl2 linux内核升级](https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-kernel)，升级需要下载的软件也存在下载速度的问题，[wsl_update传送门,提取码：h0ny](链接：https://pan.baidu.com/s/1f6i8ByS2ueqL3uVr4sanHA)
 
+### wsl子系统中dns问题
+安装完成后发现不能够正常访问百度和进行git的下载，原因是因为域名服务器的问题。解决思路是在配置文件`/etc/resolv.conf`文件中配置公用的dns地址，而不是使用wsl自动生成的。[这里](https://www.ip.cn/dns.html)和[知乎](https://zhuanlan.zhihu.com/p/55240680)上都有一些常用的dns地址可以选择使用。
+
+然后，蛋疼的地方就来了。。。
+
+配置了上面的resolv.conf文件后，重新打开后wsl会自动生成文件覆盖，搜索尝试了很久，最后看英文网站找到解决办法：
+```shell
+#新增wsl文件 并增加配置项目
+vi /etc/wsl.conf
+# 增加下面内容后保存关闭
+[network]
+generateResolvConf = false
+# 删除原本的文件
+sudo rm /etc/resolv.conf
+#创建自己的resolv文件
+sudo vim /etc/resolv.conf
+#下面是我的配置
+nameserver 119.29.29.29 223.5.5.5 223.6.6.6 180.76.76.76 114.114.114.114 114.114.115.115 8.8.8.8 8.8.4.4
+# 重要重要重要！！然后关闭wsl，但是不要重新打开，在powershell中执行下面的语句进行wsl的重启，否则，一切白搭！！！还是覆盖
+wsl --shutdown
+```
+
 ### 参考网址
 https://tinychen.com/200512-windowsterminal-wsl2-centos/
 
