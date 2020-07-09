@@ -5,7 +5,7 @@
 
 废话也不多说了，安装环境部署大概分为开发相关安装、windows terminal安装及美化。
 
-## 开发相关安装
+## 一、开发相关安装
 ### 编辑器安装
 - vscode
   - 请动动你的小手指点击[这里](https://code.visualstudio.com/download)下载安装包
@@ -91,7 +91,7 @@
   - why：前面已经得到一个mingw的编译器，这里为啥还要在安装一个。主要是为了使用clang-format的格式化软件啦。。。。。
   - 安装：[地址](https://releases.llvm.org/download.html)。安装后也是在ide和编辑器中进行配置。
 
-## windows terminal安装及美化
+## 二、windows terminal安装及美化
 这一章的主要目的是在windows下得到一个美观、高可用的终端，别和我说虚拟机和wsl2，我都装了，但我还是要一个本地的windows terminal。
 ### git for windows安装
 - 目的：使用linux下的常用的命令，在windows的安装目录下将windows系统挂载为linux下的根目录，支持更多的linux命令。
@@ -149,6 +149,37 @@
   ```
   - 快捷键启动：choco install winhotkey,然后配置快捷键指向对应的应用程序
 
-## 象征性总结
+## 三、wsl子系统安装-centos
+这里主要针对centos的子系统进行安装，其他类似ubuntu系统在windows应用商店中就可以找到。
+
+### 安装[LxRunOffline](https://github.com/DDoSolitary/LxRunOffline)
+**what** 这是一个在windows下用来管理wsl子系统的软件，可以对linux的子系统进行指定路径的安装、查看版本、启动、停止等。
+
+**how** 前面已经安装了包管理器chocolate，可以直接使用命令`choco install lxrunoffline`进行安装，然后你会发现。。。垃圾网速基本下不下来安装不成功。所以我是直接科学上网浏览器上下载下来解压添加环境变量后使用。[LxRunOffline传送门,提取码：oppc](https://pan.baidu.com/s/1UzZ6aKYp6lrkwWoFKEjqOg)
+
+### 获取centos镜像
+去centos的git官网下载对应的安装包，我这里使用的是centos-7-x86_64-docker.tar.xz  
+`wget https://github.com/CentOS/sig-cloud-instance-images/blob/CentOS-7-x86_64/docker/centos-7-x86_64-docker.tar.xz`
+
+同样还是老问题，下载特别慢，而且还可能出现下载看似成功，但是实际没有下完整的情况，这个时候去安装的时候会报错。[centos镜像传送门,提取码4mvh](https://pan.baidu.com/s/1zUpy8N5dN4sgUWuFMn8jxg 
+)
+
+### 安装
+在镜像的下载路径下，打开windows shell使用LxOffline进行安装
+```
+LxRunOffline install -n 自定义系统名称 -d 安装目录路径 -f tar.xz安装包路径
+eg:
+LxRunOffline install -n centos -d c:\d\programfile\wslsystem\centos -f .\centos-7-x86_64-docker.tar.xz
+```
+
+### 升级到wsl2
+参考microsoft官网介绍进行[升级](https://docs.microsoft.com/zh-cn/windows/wsl/install-win10)，
+
+**tips**---如果需要先升级wsl2内核，则参考[wsl2 linux内核升级](https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-kernel)，升级需要下载的软件也存在下载速度的问题，[wsl_update传送门,提取码：h0ny](链接：https://pan.baidu.com/s/1f6i8ByS2ueqL3uVr4sanHA)
+
+### 参考网址
+https://tinychen.com/200512-windowsterminal-wsl2-centos/
+
+## 四、总结 
 洗洗睡吧~~困
 
