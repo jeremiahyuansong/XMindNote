@@ -9,3 +9,6 @@
 - Abstract Factory(抽象工厂)，families of product objects
 - Builder(生成器)，same construction process can create different representations.
 
+### 行为型模式
+- Observer(观察者)，one-to-many dependency between objects
+
