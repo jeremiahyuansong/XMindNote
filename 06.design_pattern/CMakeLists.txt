@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(PATTERNS
         abstract-factory
         builder
+        observer
         singleton
         )
 
